@@ -9,13 +9,14 @@ public class BaseAssertionLogger {
     private static final Logger logger = LogManager.getLogger(BaseAssertionLogger.class);
 
     public static <T> void logAndAssert(T actual, org.hamcrest.Matcher<? super T> matcher,
-                                        String passMessage, String failMessage) {
+                                        String passMessage, String failMessage, String valueName) {
         try {
             assertThat(failMessage, actual, matcher);
-            logger.info("✅ Assertion Passed: {} | Actual: {}", passMessage, actual);
+            logger.info("✅ Assertion Passed in {}: {} | Actual: {}", valueName, passMessage, actual);
         } catch (AssertionError e) {
-            logger.error("❌ Assertion Failed: {} | Actual: {}", failMessage, actual);
-            throw e; // AssertionError'ı tekrar fırlatıyoruz
+
+            logger.error("❌ Assertion Failed in {}: {} | Actual: {}", valueName, failMessage, actual);
+            throw e;
         }
     }
 }
