@@ -10,6 +10,7 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ResponseItem{
 	private String date;
+	private int v;
 	@JsonProperty("id")
 	private int id;
 	private int userId;
