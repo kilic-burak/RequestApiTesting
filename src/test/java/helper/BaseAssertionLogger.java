@@ -2,6 +2,7 @@ package helper;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hamcrest.Matcher;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -11,7 +12,7 @@ public class BaseAssertionLogger {
     public static <T> void logAndAssert(T actual, org.hamcrest.Matcher<? super T> matcher,
                                         String passMessage, String failMessage, String valueName) {
         try {
-            assertThat(failMessage, actual, matcher);
+            assertThat(failMessage,actual,matcher);
             logger.info("✅ Assertion Passed in {}: {} | Actual: {}", valueName, passMessage, actual);
         } catch (AssertionError e) {
 
@@ -19,4 +20,6 @@ public class BaseAssertionLogger {
             throw e;
         }
     }
+
+
 }
