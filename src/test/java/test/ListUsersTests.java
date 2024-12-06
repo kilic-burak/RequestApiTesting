@@ -4,9 +4,12 @@ import base.BaseTest;
 import client.ApiClient;
 import helper.JsonUtils;
 import helper.ValidatorUsers;
+import io.restassured.common.mapper.TypeRef;
 import io.restassured.response.Response;
 import org.example.models.ResponseItem;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 public class ListUsersTests extends BaseTest {
 
@@ -15,6 +18,7 @@ public class ListUsersTests extends BaseTest {
 
         ApiClient apiClient = createApiClient();
         Response response = apiClient.get("carts");
+
         ValidatorUsers.validateStatusCode(response,200);
     }
 

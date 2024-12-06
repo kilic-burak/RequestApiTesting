@@ -5,6 +5,7 @@ import org.example.models.ProductsItem;
 import org.example.models.ResponseItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 
@@ -16,6 +17,19 @@ public class ValidatorUsers {
         BaseAssertionLogger.logAndAssert(expectedStatus,is(actualStatusCode),"Pass","Fail","Status Code");
 
     }
+
+//    public static void validateProductsNotEmpty(List<ResponseItem> responseItems){
+//
+//        if (responseItems == null || responseItems.isEmpty()) {
+//            BaseAssertionLogger.logAndAssert(false, is(true), "Fail", "Fail", "Response is null or empty");
+//            return;
+//        }
+//
+//        boolean allProductsNotEmpty = responseItems.stream()
+//                .allMatch(item -> item.getProducts() != null && !item.getProducts().isEmpty());
+//
+//        BaseAssertionLogger.logAndAssert(allProductsNotEmpty, is(true), "Pass", "Fail", "All Products Not Empty");
+//    }
     public static void validateUsers(ResponseItem actualUsers, ResponseItem expectedUsers){
 
         ArrayList<Integer> actualProductId = new ArrayList<>();
