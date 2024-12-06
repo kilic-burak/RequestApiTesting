@@ -15,7 +15,7 @@ public class ListUsersTests extends BaseTest {
 
         ApiClient apiClient = createApiClient();
         Response response = apiClient.get("carts");
-        ValidatorUsers.validateStatusCode(response,404);
+        ValidatorUsers.validateStatusCode(response,200);
     }
 
     @Test
@@ -23,12 +23,11 @@ public class ListUsersTests extends BaseTest {
 
         ApiClient apiClient = createApiClient();
         Response response = apiClient.get("carts/1");
+
         ResponseItem actualResponse = response.as(ResponseItem.class);
         ResponseItem expectedResponse = JsonUtils.readTestDataFromJsonFile("users.json");
+
         ValidatorUsers.validateStatusCode(response,200);
         ValidatorUsers.validateUsers(actualResponse,expectedResponse);
-
-
-
     }
 }
