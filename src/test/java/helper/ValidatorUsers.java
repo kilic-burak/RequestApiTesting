@@ -14,11 +14,11 @@ public class ValidatorUsers {
 
     public static void validateStatusCode(Response response, int expectedStatus) {
         int actualStatusCode = response.statusCode();
-        BaseAssertionLogger.logAndAssert(expectedStatus,is(actualStatusCode),"Pass","Fail","Status Code");
+        BaseAssertionLogger.logAndAssert(expectedStatus, is(actualStatusCode), "Pass", "Fail", "Status Code");
 
     }
 
-//    public static void validateProductsNotEmpty(List<ResponseItem> responseItems){
+    //    public static void validateProductsNotEmpty(List<ResponseItem> responseItems){
 //
 //        if (responseItems == null || responseItems.isEmpty()) {
 //            BaseAssertionLogger.logAndAssert(false, is(true), "Fail", "Fail", "Response is null or empty");
@@ -30,50 +30,49 @@ public class ValidatorUsers {
 //
 //        BaseAssertionLogger.logAndAssert(allProductsNotEmpty, is(true), "Pass", "Fail", "All Products Not Empty");
 //    }
-    public static void validateUsers(ResponseItem actualUsers, ResponseItem expectedUsers){
+    public static void validateUsers(ResponseItem actualUsers, ResponseItem expectedUsers) {
 
-        ArrayList<Integer> actualProductId = new ArrayList<>();
-        ArrayList<Integer> actualQuantity=new ArrayList<>();
-        int actualId= actualUsers.getId();
-        int actualUserId=actualUsers.getUserId();
+        List<Integer> actualProductId = actualUsers.getProducts()
+                .stream()
+                .map(ProductsItem::getProductId)
+                .toList();
+        List<Integer> actualQuantity = actualUsers.getProducts()
+                .stream()
+                .map(ProductsItem::getQuantity)
+                .toList();
+        List<Integer> expectedProductId = expectedUsers.getProducts()
+                .stream()
+                .map(ProductsItem::getProductId)
+                .toList();
+        List<Integer> expectedQuantity = expectedUsers.getProducts()
+                .stream()
+                .map(ProductsItem::getQuantity)
+                .toList();
+
+        int actualId = actualUsers.getId();
+        int actualUserId = actualUsers.getUserId();
         String actualDate = actualUsers.getDate();
 
-        for (ProductsItem productsItem:actualUsers.getProducts()){
-            actualProductId.add(productsItem.getProductId());
-            actualQuantity.add(productsItem.getQuantity());
+        int expectedId = expectedUsers.getId();
+        int expectedUserId = expectedUsers.getUserId();
+        String expectedDate = expectedUsers.getDate();
 
-        }
+        BaseAssertionLogger.logAndAssert(actualId, is(expectedId), "Pass", "Fail", "ID");
+        BaseAssertionLogger.logAndAssert(actualUserId, is(expectedUserId), "Pass", "Fail", "User ID");
+        BaseAssertionLogger.logAndAssert(actualDate, is(expectedDate), "Pass", "Fail", "Date");
 
-        ArrayList<Integer> expectedProductId = new ArrayList<>();
-        ArrayList<Integer> expectedQuantity=new ArrayList<>();
-        int expectedId= expectedUsers.getId();
-        int expectedUserId= expectedUsers.getUserId();
-        String expectedDate =expectedUsers.getDate();
+        if (actualProductId.size() == expectedProductId.size()) {
 
-        for (ProductsItem productsItem:expectedUsers.getProducts()){
-            expectedProductId.add(productsItem.getProductId());
-            expectedQuantity.add(productsItem.getQuantity());
-        }
-
-        BaseAssertionLogger.logAndAssert(actualId,is(expectedId),"Pass","Fail","ID");
-        BaseAssertionLogger.logAndAssert(actualUserId,is(expectedUserId),"Pass","Fail","User ID");
-        BaseAssertionLogger.logAndAssert(actualDate,is(expectedDate),"Pass","Fail","Date");
-
-        if (actualProductId.size()==expectedProductId.size()) {
             for (int i = 0; i < actualProductId.size(); i++) {
-                BaseAssertionLogger.logAndAssert(actualProductId.get(i),is(expectedProductId.get(i)),"Pass","Fail","ProductId "+(i+1));
+                BaseAssertionLogger.logAndAssert(actualProductId.get(i), is(expectedProductId.get(i)), "Pass", "Fail", "ProductId " + (i + 1));
             }
-        }
-        else System.out.println("Quantity listeleri birbirlerine eşit değidir.");
+        } else System.out.println("Quantity listeleri birbirlerine eşit değidir.");
 
-        if (actualQuantity.size()==expectedQuantity.size()) {
+        if (actualQuantity.size() == expectedQuantity.size()) {
             for (int i = 0; i < actualQuantity.size(); i++) {
-                BaseAssertionLogger.logAndAssert(actualQuantity.get(i),is(expectedQuantity.get(i)),"Pass","Fail","Quantity "+(i+1));
+                BaseAssertionLogger.logAndAssert(actualQuantity.get(i), is(expectedQuantity.get(i)), "Pass", "Fail", "Quantity " + (i + 1));
             }
-        }
-        else System.out.println("ProductId listeleri birbirlerine eşit değidir.");
-
-
+        } else System.out.println("ProductId listeleri birbirlerine eşit değidir.");
 
     }
 
