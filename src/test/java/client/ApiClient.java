@@ -1,6 +1,7 @@
 package client;
 
 import base.BaseTest;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
@@ -23,13 +24,13 @@ public class ApiClient extends BaseTest {
                 .response();
     }
 
-    public Response post(String endPoint){
+    public Response post(String endPoint,String body){
 
         return given(spec)
-                .when()
+                .contentType(ContentType.JSON)
+                .body(body)
                 .post(endPoint)
                 .then()
-                .log().all()
                 .extract()
                 .response();
     }
